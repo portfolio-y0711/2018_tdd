@@ -16,7 +16,7 @@ class ListViewTest(TestCase):
 
         self.assertContains(response, 'itemey 1')
         self.assertContains(response, 'itemey 2')
-        
+
 class ItemModelTest(TestCase):
 
     def test_saving_and_retrieving_items(self):
