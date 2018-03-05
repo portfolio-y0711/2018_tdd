@@ -36,6 +36,8 @@ class NewVisitorTest(unittest.TestCase):
 		# "1: 공작깃털 사기" 아이템이 추가된다
         inputbox.send_keys(Keys.ENTER)
 
+        import time
+        time.sleep(10)
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
