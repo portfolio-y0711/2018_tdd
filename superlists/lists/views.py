@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from lists.models import Item, List
 
+def add_item(request):
+    pass
+    
 def new_list(request):
     list_ = List.objects.create()
     Item.objects.create(text=request.POST['item_text'], list=list_)
