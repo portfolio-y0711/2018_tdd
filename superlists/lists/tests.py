@@ -6,6 +6,25 @@ from django.http import HttpRequest
 from lists.models import Item
 from lists.views import home_page
 
+class NewListTest(TestCase):
+
+    def test_home_page_can_save_a_POST_request(self):
+        self.client.post(
+            '/lists/new',
+            data={'item_text': '신규 작업 아이템'}
+        )
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, '신규 작업 아이템')
+
+    def test_home_page_redirects_after_POST(self):
+        response =self.client.post(
+            '/lists/new',
+            data={'item_text': '신규 작업 아이템'}
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
+
 class ListViewTest(TestCase):
 
     def test_uses_list_template(self):
@@ -57,24 +76,4 @@ class HomePageTest(TestCase):
         response = home_page(request)
         expected_html = render_to_string('home.html')
         self.assertEqual(response.content.decode(), expected_html)
-
-    def test_home_page_can_save_a_POST_request(self):
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = '신규 작업 아이템'
-
-        response = home_page(request)
-
-        self.assertEqual(Item.objects.count(), 1)
-        new_item = Item.objects.first()
-        self.assertEqual(new_item.text, '신규 작업 아이템')
-
-    def test_home_page_redirects_after_POST(self):
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = '신규 작업 아이템'
-
-        response = home_page(request)
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
+        
