@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from lists.models import Item
 
 def new_list(request):
-    pass
+    return redirect('/lists/the-only-list-in-the-world/') 
 
 def view_list(request):
     items = Item.objects.all()
