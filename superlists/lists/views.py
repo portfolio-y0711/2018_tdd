@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from lists.models import Item
 
+def new_list(request):
+    pass
+
 def view_list(request):
     items = Item.objects.all()
     return render(request, 'list.html', {'items': items})
