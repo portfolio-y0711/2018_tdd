@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from lists.models import Item, List
 
 def add_item(request, list_id):
-    pass
+    list_ = List.objects.get(id=list_id)
+    return redirect('/lists/%d/' % (list_.id,))
 
 def new_list(request):
     list_ = List.objects.create()
