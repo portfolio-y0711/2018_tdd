@@ -22,7 +22,8 @@ class NewListTest(TestCase):
             '/lists/new',
             data={'item_text': '신규 작업 아이템'}
         )
-        self.assertRedirects(response, '/lists/the-only-list-in-the-world/')
+        new_list = List.objects.first()
+        self.assertRedirects(response, '/lists/%d/' % (new_list.id,))
 
 class ListViewTest(TestCase):
 
