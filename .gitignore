@@ -1,4 +1,5 @@
 .vscode
 /tdd
+/tdd-linux
 db.sqlite3
 *.pyc
