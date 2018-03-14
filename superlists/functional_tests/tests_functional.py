@@ -17,6 +17,15 @@ class NewVisitorTest(LiveServerTestCase):
             delta=10
         )
 
+        # 그녀는 새로운 리스트를 시작하고 입력 상자가
+        # 가운데 배치된 것을 확인한다
+        inputbox.send_keys('testing\n')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta = 10
+        )
     def setUp(self):
         self.browser = webdriver.Chrome()
         self.browser.implicitly_wait(3)
