@@ -3,3 +3,4 @@
 /tdd-linux
 db.sqlite3
 *.pyc
+debug.log
