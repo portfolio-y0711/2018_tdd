@@ -9,6 +9,7 @@ class ListAndItemModelsTest(TestCase):
         item = Item(list=list_, text='')
         with self.assertRaises(ValidationError):
             item.save()
+            item.full_clean()
 
     def test_saving_and_retrieving_items(self):
         list_ = List()
