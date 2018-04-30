@@ -2,8 +2,9 @@ import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase 
+from unittest import skip
 
-class NewVisitorTest(StaticLiveServerTestCase):
+class FunctionalTest(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -13,56 +14,20 @@ class NewVisitorTest(StaticLiveServerTestCase):
                 return  
         super().setUpClass()
         cls.server_url = cls.live_server_url
-    
+        
     @classmethod
     def tearDownClass(cls):
         if cls.server_url == cls.live_server_url:
             super().tearDownClass()
 
-    def test_cannot_add_empty_list_items(self):
-        # 에디스는 메인 페이지에 접속해서 빈 아이템을 실수로 등록하려고 한다
-        # 입력 상자가 비어 있는 상태에서 엔터키를 누른다
-        
-        # 페이지가 새로고침되고, 빈 아이템을 등록할 수 없다는
-        # 에러 메시지가 표시된다.
-
-        # 다른 아이템을 입력하고 이번에는 정상 처리된다.
-
-        # 그녀는 고의적으로 다시 빈 아이템을 등록한다.
-
-        # 리스트 페이지에 다시 에러 메시지가 표시된다.
-
-        # 아이템을 입력하면 정상 동작한다.
-        self.fail('write me!')
-
-    def test_layout_and_styling(self):
-        #에디스는 메인 페이지를 방문한다
-        self.browser.get(self.server_url)
-        self.browser.set_window_size(1024,768)
-
-        #그녀는 입력 상자가 가운데 배치된 것을 본다
-        inputbox = self.browser.find_element_by_id('id_new_item')
-        self.assertAlmostEqual(
-            inputbox.location['x'] + inputbox.size['width'] / 2,
-            512,
-            delta=300
-        )
-
-        # 그녀는 새로운 리스트를 시작하고 입력 상자가
-        # 가운데 배치된 것을 확인한다
-        inputbox.send_keys('testing\n')
-        inputbox = self.browser.find_element_by_id('id_new_item')
-        self.assertAlmostEqual(
-            inputbox.location['x'] + inputbox.size['width'] / 2,
-            512,
-            delta = 300
-        )
     def setUp(self):
         self.browser = webdriver.Chrome()
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
         self.browser.quit()
+
+class NewVisitorTest(FunctionalTest):
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
@@ -138,3 +103,49 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.assertIn('우유 사기', page_text)
 
         # 둘 다 만족하고 잠자리에 든다
+
+class LayoutAndStylingTest(FunctionalTest):
+
+    def test_layout_and_styling(self):
+        #에디스는 메인 페이지를 방문한다
+        self.browser.get(self.server_url)
+        self.browser.set_window_size(1024,768)
+
+        #그녀는 입력 상자가 가운데 배치된 것을 본다
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=300
+        )
+
+        # 그녀는 새로운 리스트를 시작하고 입력 상자가
+        # 가운데 배치된 것을 확인한다
+        inputbox.send_keys('testing\n')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta = 300
+        )
+
+class IntemValidationTest(FunctionalTest):
+    
+    @skip
+    def test_cannot_add_empty_list_items(self):
+        # 에디스는 메인 페이지에 접속해서 빈 아이템을 실수로 등록하려고 한다
+        # 입력 상자가 비어 있는 상태에서 엔터키를 누른다
+        
+        # 페이지가 새로고침되고, 빈 아이템을 등록할 수 없다는
+        # 에러 메시지가 표시된다.
+
+        # 다른 아이템을 입력하고 이번에는 정상 처리된다.
+
+        # 그녀는 고의적으로 다시 빈 아이템을 등록한다.
+
+        # 리스트 페이지에 다시 에러 메시지가 표시된다.
+
+        # 아이템을 입력하면 정상 동작한다.
+        self.fail('write me!')
+
+    
