@@ -1,10 +1,14 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from lists.models import Item, List
 
 def new_list(request):
     list_ = List.objects.create()
     item = Item.objects.create(text=request.POST['item_text'], list=list_)
-    item.full_clean()
+    try:
+        item.full_clean()
+    except ValidationError:
+        pass
     return redirect('/lists/%d/' % (list_.id,))
 
 def add_item(request, list_id):
