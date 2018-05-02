@@ -8,6 +8,7 @@ def new_list(request):
     try:
         item.full_clean()
     except ValidationError:
+        error = "You can't have an empty list item"
         return render(request, 'home.html')
     return redirect('/lists/%d/' % (list_.id,))
 
