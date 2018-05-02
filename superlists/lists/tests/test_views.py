@@ -38,6 +38,7 @@ class NewItemTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'home.html')
         expected_error = "You can't have an empty list item"
+        print(response.content.decode())
         self.assertContains(response, expected_error)
 
 class NewListTest(TestCase):
