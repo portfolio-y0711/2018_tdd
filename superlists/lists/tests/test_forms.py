@@ -6,6 +6,10 @@ class ItemFormTest(TestCase):
     # def test_form_renders_item_text_input(self):
     #     form = ItemForm()
         # self.fail(form.as_p())
+    
+    def test_form_save_handles_saving_to_a_list(self):
+        form = ItemForm(data={'text': 'do me'})
+        new_item = form.save()
 
     def test_form_validation_for_blank_items(self):
         form = ItemForm(data={'text': ''})
