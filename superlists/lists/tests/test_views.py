@@ -7,6 +7,7 @@ from django.http import HttpRequest
 from lists.models import Item, List
 from lists.views import home_page
 from lists.forms import ItemForm, EMPTY_LIST_ERROR
+from unittest import skip
 
 class NewListTest(TestCase):
 
@@ -117,6 +118,7 @@ class ListViewTest(TestCase):
 
         self.assertRedirects(response, '/lists/%d/' % (correct_list.id,))
 
+    @skip
     def test_duplicate_item_validation_errors_end_up_on_lists_page(self):
         list1 = List.objects.create()
         item1 = Item.objects.create(list=list1, text='textey')
