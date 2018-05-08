@@ -41,3 +41,11 @@ class ListAndItemModelsTest(TestCase):
         self.assertEqual(first_saved_item.list, list_)
         self.assertEqual(second_saved_item.text, '두 번째 아이템')
         self.assertEqual(second_saved_item.list, list_)
+
+    def test_duplicate_items_are_invalid(self):
+        list_ = List.objects.create()
+        Item.objects.create(list=list_, text='bla')
+        with self.assertRaises(ValidationError):
+            item = Item(list=list_, text='bla')
+            item.full_clean()
+            
