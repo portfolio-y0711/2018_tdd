@@ -6,7 +6,7 @@ from django.http import HttpRequest
 
 from lists.models import Item, List
 from lists.views import home_page
-from lists.forms import ItemForm, EMPTY_LIST_ERROR
+from lists.forms import ItemForm, EMPTY_LIST_ERROR,ExistingListItemForm,DUPLICATE_ITEM_ERROR
 from unittest import skip
 
 class NewListTest(TestCase):
@@ -43,7 +43,7 @@ class NewListTest(TestCase):
 
     def test_for_invalid_input_passes_form_to_template(self):
         response = self.post_invalid_input()
-        self.assertIsInstance(response.context['form'], ItemForm)
+        self.assertIsInstance(response.context['form'], ExistingListItemForm)
 
     def test_validation_errors_are_shown_on_home_page(self):
         response = self.post_invalid_input()
@@ -54,7 +54,7 @@ class ListViewTest(TestCase):
     def test_displays_item_form(self):
         list_ = List.objects.create()
         response = self.client.get('/lists/%d/' % (list_.id,))
-        self.assertIsInstance(response.context['form'], ItemForm)
+        self.assertIsInstance(response.context['form'], ExistingListItemForm)
         self.assertContains(response, 'name="text"')
 
     def test_passes_correct_list_to_template(self):
