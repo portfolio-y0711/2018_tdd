@@ -2,6 +2,7 @@ from django import forms
 from lists.models import Item
 
 EMPTY_LIST_ERROR = "You can't have an empty list item"
+DUPLICATE_ITEM_ERROR = "이미 리스트에 해당 아이템이 있습니다"
 
 class ItemForm(forms.models.ModelForm):
 
@@ -17,9 +18,14 @@ class ItemForm(forms.models.ModelForm):
         error_messages = {
             'text': {'required': EMPTY_LIST_ERROR}
         }
-    
+
+
     def save(self, for_list):
         self.instance.list = for_list
         return super().save()
+
+class ExistingListItemForm(forms.models.ModelForm):
+    def __init__(self, for_list, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     
