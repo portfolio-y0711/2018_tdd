@@ -67,3 +67,7 @@ class ListAndItemModelsTest(TestCase):
             Item.objects.all(),
             [item1, item2, item3]
         )
+
+    def test_string_representation(self):
+        item = Item(text='어떤 텍스트')
+        self.assertEqual(str(item), '어떤 텍스트')
