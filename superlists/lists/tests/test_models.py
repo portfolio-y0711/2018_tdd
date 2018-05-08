@@ -36,7 +36,9 @@ class ListAndItemModelsTest(TestCase):
         self.assertEqual(saved_items.count(), 2)
 
         first_saved_item = saved_items[0]
+        print(first_saved_item.text)
         second_saved_item = saved_items[1]
+        print(second_saved_item.text)
         self.assertEqual(first_saved_item.text, '첫 번째 아이템')
         self.assertEqual(first_saved_item.list, list_)
         self.assertEqual(second_saved_item.text, '두 번째 아이템')
@@ -55,4 +57,3 @@ class ListAndItemModelsTest(TestCase):
         Item.objects.create(list=list1, text='bla')
         item = Item(list=list2, text='bla')
         item.full_clean()
-        
