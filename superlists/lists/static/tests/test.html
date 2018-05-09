@@ -19,15 +19,9 @@
     <script src="qunit-1.12.0.js"></script>
     <script>
         /*global $, test, equal */
-
-        test("스모크 테스트", function(){
-            equal($('.has-error').is(':visible'), true);
-            $('.has-error').hide();
-            equal($('.has-error').is(':visible'), false);
-        });
-        test("스모크 테스트 2", function(){
-            equal($('.has-error').is(':visible'), true);
-            $('.has-error').hide();
+        
+        test("키 입력 시에 에러가 숨겨져야 한다", function(){
+            $('input').trigger('keypress');
             equal($('.has-error').is(':visible'), false);
         });
     </script>
