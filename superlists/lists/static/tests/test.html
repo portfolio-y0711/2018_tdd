@@ -26,6 +26,11 @@
             $('.has-error').hide();
             equal($('.has-error').is(':visible'), false);
         });
+        test("스모크 테스트 2", function(){
+            equal($('.has-error').is(':visible'), true);
+            $('.has-error').hide();
+            equal($('.has-error').is(':visible'), false);
+        });
     </script>
 </body>
 </html>
